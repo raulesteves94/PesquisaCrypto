@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PesquisaCrypto.Models;
@@ -18,6 +20,28 @@ namespace PesquisaCrypto.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Moedas.ToListAsync());
+        }
+
+        public async Task<IActionResult> EscolhaDeMoedas(List<Moedas> moedas)
+        {
+            foreach (var item in moedas)
+            {
+                if(item.CheckboxMarcado == true)
+                {
+                    Moedas moeda = await _context.Moedas.FirstAsync(x => x.MoedasId == item.MoedasId);
+                    moeda.Quantidade += 1;
+                    _context.Update(moeda);
+
+                    await _context.SaveChangesAsync();
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public JsonResult DadosGraficos()
+        {
+            return Json(_context.Moedas.Select(x => new { x.Nome, x.Quantidade }));
         }
 
         // GET: Moedas/Create

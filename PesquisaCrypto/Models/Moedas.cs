@@ -9,11 +9,12 @@ namespace PesquisaCrypto.Models
     public class Moedas
     {
         public int MoedasId { get; set; }
+
         public string Nome { get; set; }
+
         public int Quantidade { get; set; }
 
         [NotMapped]
-        public int CheckboxMarcado { get; set; }
-
+        public bool CheckboxMarcado { get; set; }
     }
 }

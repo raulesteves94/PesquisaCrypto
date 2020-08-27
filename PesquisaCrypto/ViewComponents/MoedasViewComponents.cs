@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace PesquisaCrypto.ViewComponents
 {
-    public class MoedasViewComponents:ViewComponent
+    public class MoedasViewComponent : ViewComponent
     {
         private readonly MoedasContexto _moedasContexto;
 
-        public MoedasViewComponents(MoedasContexto moedasContexto)
+        public MoedasViewComponent(MoedasContexto moedasContexto)
         {
             _moedasContexto = moedasContexto;
         }

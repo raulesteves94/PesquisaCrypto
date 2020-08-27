@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PesquisaCrypto.Models
 {
-    public class MoedasContexto:DbContext
+    public class MoedasContexto : DbContext
     {
         public DbSet<Moedas> Moedas { get; set; }
 
@@ -14,5 +14,6 @@ namespace PesquisaCrypto.Models
         {
 
         }
+
     }
 }
