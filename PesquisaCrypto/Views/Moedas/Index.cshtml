@@ -4,56 +4,24 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Nova Moeda</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantidade)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantidade)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MoedasId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MoedasId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MoedasId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
 
-<div>
-    <div class="col-lg-6" well>
+<div class="row">
+    <div class="col-lg-6 card bg-light p-3">
         @await Component.InvokeAsync("Moedas")
     </div>
 
-    <div>
+    <div class="col-lg-6">
         <partial name="_Grafico"/>
     </div>
 </div>
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/Chart.js/Chart.js"></script>
 
 <script>
-import * as Chart from "../../wwwroot/lib/Chart.js/Chart"
 
     function PegarMoedas(dados) {
         var quantidade = 0;
@@ -84,9 +52,9 @@ import * as Chart from "../../wwwroot/lib/Chart.js/Chart"
         var cores = [];
 
         while (quantidade > 0) {
-            var r = Math.floor(MAth.random() * 255)
-            var g = Math.floor(MAth.random() * 255)
-            var b = Math.floor(MAth.random() * 255)
+            var r = Math.floor(Math.random() * 255)
+            var g = Math.floor(Math.random() * 255)
+            var b = Math.floor(Math.random() * 255)
 
             cores.push("rgb(" + r + ", " + g + ", " + b + ")");
 
@@ -98,16 +66,16 @@ import * as Chart from "../../wwwroot/lib/Chart.js/Chart"
 
     $.ajax({
         type: "GET",
-        url: "Moedas/DadosGrafico",
+        url: "Moedas/DadosGraficos",
         success: function (dados) {
-            new Chart(docuement.getElementById("grafico"), {
+            new Chart(document.getElementById("grafico"), {
                 type: 'pie',
                 data: {
                     labels: PegarMoedas(dados),
                     datasets : [{
                         labels: "Quantidade",
                         borderWidth: 2,
-                        backgroudcolor: PegarCores(dados.length),
+                        backgroundColor: PegarCores(dados.length),
                         data: PegarQuantidades(dados)
                     }]
                 },
